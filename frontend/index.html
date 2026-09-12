@@ -4,926 +4,951 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Ration Dispenser | IoT PDS Dashboard • Tamil Nadu</title>
+  <title>Smart Ration Dispenser | Tamil Nadu PDS Terminal</title>
   <meta name="description"
-    content="IoT-enabled Smart Ration Dispenser with RFID authentication, fingerprint biometrics, and real-time load cell telemetry for Tamil Nadu PDS.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+    content="Offline smart ration dispensing terminal with RFID and biometric authentication, load-cell dispensing and real-time telemetry for the Tamil Nadu Public Distribution System.">
+  <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ========= OFFICIAL TERMINAL LOGIN SCREEN ========= -->
-  <div id="login-screen">
-    <!-- WebGL Velaris Living Gradient Canvas -->
-    <canvas id="login-velaris-canvas" class="login-velaris-canvas"></canvas>
+  <!-- =====================================================================
+       ICON SPRITE — Lucide-style, 24x24, currentColor.
+       Replaces every emoji the previous build used as an icon.
+       ===================================================================== -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <g id="i-base" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round"></g>
+    </defs>
+    <symbol id="icon-emblem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2v3" />
+      <path d="M7 22V9l5-4 5 4v13" />
+      <path d="M4 22h16" />
+      <path d="M10 22v-5h4v5" />
+    </symbol>
+    <symbol id="icon-dispenser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 3h16l-3 7H7Z" />
+      <path d="M12 10v4" />
+      <rect x="7" y="17" width="10" height="4" rx="1" />
+    </symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </symbol>
+    <symbol id="icon-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="m7.5 4.27 9 5.15" />
+      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="M12 22V12" />
+    </symbol>
+    <symbol id="icon-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" />
+      <path d="M8 8h8" />
+      <path d="M8 12h8" />
+      <path d="M8 16h5" />
+    </symbol>
+    <symbol id="icon-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 21v-7" />
+      <path d="M4 10V3" />
+      <path d="M12 21v-9" />
+      <path d="M12 8V3" />
+      <path d="M20 21v-5" />
+      <path d="M20 12V3" />
+      <path d="M1 14h6" />
+      <path d="M9 8h6" />
+      <path d="M17 16h6" />
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="icon-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="7.5" cy="15.5" r="5.5" />
+      <path d="m21 2-9.6 9.6" />
+      <path d="m15.5 7.5 3 3L22 7l-3-3" />
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+      <path d="M21 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+      <path d="M8 16H3v5" />
+    </symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M12 15V3" />
+    </symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </symbol>
+    <symbol id="icon-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <rect x="9" y="9" width="6" height="6" rx="1" />
+    </symbol>
+    <symbol id="icon-scale" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v18" />
+      <path d="M5 21h14" />
+      <path d="m3 9 3-6 3 6a3 3 0 0 1-6 0Z" />
+      <path d="m15 9 3-6 3 6a3 3 0 0 1-6 0Z" />
+    </symbol>
+    <symbol id="icon-volume" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5 6 9H2v6h4l5 4z" />
+      <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+      <path d="M19 5a9 9 0 0 1 0 14" />
+    </symbol>
+    <symbol id="icon-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 13a10 10 0 0 1 14 0" />
+      <path d="M8.5 16.5a5 5 0 0 1 7 0" />
+      <path d="M2 8.8a15 15 0 0 1 20 0" />
+      <path d="M12 20h.01" />
+    </symbol>
+    <symbol id="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+      <path d="M6 15h4" />
+    </symbol>
+    <symbol id="icon-inbox" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+      <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z" />
+    </symbol>
+    <symbol id="icon-fingerprint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+      <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+      <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+      <path d="M2 12a10 10 0 0 1 18-6" />
+      <path d="M2 16h.01" />
+      <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+      <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2" />
+      <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+      <path d="M9 6.8a6 6 0 0 1 9 5.2v2" />
+    </symbol>
+  </svg>
 
+  <!-- =====================================================================
+       LOGIN
+       ===================================================================== -->
+  <div class="login" id="login-screen">
     <div class="login-card">
-      <div class="login-emblem-wrap">
-        <svg class="login-emblem-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Outer Gold Ring -->
-          <circle cx="50" cy="50" r="46" stroke="#f59e0b" stroke-width="2.5" fill="#071324" />
-          <circle cx="50" cy="50" r="41" stroke="rgba(245, 158, 11, 0.4)" stroke-width="1" stroke-dasharray="2 3" />
-          <!-- Gopuram Silhouette (TN Emblem) -->
-          <path d="M42 72h16v-4h-2v-4h-2v-4h-2v-6h4v-3h-3v-4h2v-3h-2v-4h1.5v-3h-1.5v-3l-2-6h-2l-2 6v3h-1.5v3h2v3h-2v4h2v3h-3v4h4v6h-2v4h-2v4h-2v4z" fill="#f59e0b" />
-          <path d="M48 24h4v2h-4z M47 30h6v2h-6z M46 37h8v2h-8z M45 44h10v2h-10z M44 54h12v3h-12z" fill="#071324" />
-          <!-- Star & Laurels -->
-          <circle cx="50" cy="18" r="3" fill="#10b981" />
-          <path d="M22 55c0 14 12 25 28 25s28-11 28-25" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
-          <!-- Ashok Chakra Rays Motif -->
-          <circle cx="50" cy="50" r="8" stroke="#3b82f6" stroke-width="1.5" />
-        </svg>
-      </div>
-      
-      <p class="login-dept-ta">தமிழ்நாடு அரசு • உணவு மற்றும் நுகர்வோர் பாதுகாப்புத் துறை</p>
-      <p class="login-dept-en">Government of Tamil Nadu • Dept of Food &amp; Civil Supplies</p>
-      <h1 class="login-title">AUTOMATED FAIR PRICE TERMINAL</h1>
-      <div class="login-subtitle">
-        <span class="terminal-badge">FPS-TN-03-A-042</span>
-        <span>•</span>
-        <span>e-PDS SMART RATION v4.2</span>
+      <div class="login-emblem" aria-hidden="true">
+        <svg width="26" height="26"><use href="#icon-emblem" /></svg>
       </div>
 
-      <form id="login-form" class="login-form" autocomplete="off">
-        <div class="login-field">
-          <label for="login-id" class="login-label">
-            <span>Administrator / Inspector ID</span>
-            <span class="badge-hint">Default: Envision</span>
-          </label>
-          <div class="login-input-wrap">
-            <span class="login-input-icon">👤</span>
-            <input type="text" id="login-id" class="login-input" placeholder="Enter Administrator ID" required autofocus />
+      <p class="login-dept">
+        <span class="login-dept-ta" lang="ta">தமிழ்நாடு அரசு</span>
+        Government of Tamil Nadu · Food &amp; Civil Supplies
+      </p>
+
+      <h1 class="login-title">Fair Price Terminal</h1>
+      <div class="login-meta">
+        <span class="badge">FPS-TN-03-A-042</span>
+        <span class="badge badge-accent">e-PDS v4.2</span>
+      </div>
+
+      <form class="login-form" id="login-form" novalidate>
+        <div class="login-error" id="login-error" role="alert" hidden>
+          <svg width="18" height="18" aria-hidden="true"><use href="#icon-alert" /></svg>
+          <span id="login-error-text">Invalid credentials.</span>
+        </div>
+
+        <div class="field">
+          <div class="field-row">
+            <label class="field-label" for="login-id">Administrator ID</label>
+            <span class="login-hint">Envision</span>
           </div>
+          <input class="input" id="login-id" name="username" type="text" autocomplete="username"
+            spellcheck="false" required>
         </div>
 
-        <div class="login-field">
-          <label for="login-pass" class="login-label">
-            <span>Security Access PIN</span>
-            <span class="badge-hint">Default: 1234</span>
-          </label>
-          <div class="login-input-wrap">
-            <span class="login-input-icon">🔑</span>
-            <input type="password" id="login-pass" class="login-input" placeholder="Enter 4-Digit Security PIN" required />
+        <div class="field">
+          <div class="field-row">
+            <label class="field-label" for="login-pass">Security PIN</label>
+            <span class="login-hint">1234</span>
           </div>
+          <input class="input" id="login-pass" name="password" type="password" inputmode="numeric"
+            autocomplete="current-password" required>
         </div>
 
-        <div id="login-error" class="login-error">
-          <span>⚠️</span>
-          <span>Invalid Credentials. Please check ID and PIN.</span>
-        </div>
-
-        <button type="submit" id="login-btn" class="login-btn">
-          <span>🔐</span>
-          <span>AUTHORIZE &amp; OPEN TERMINAL</span>
+        <button class="btn btn-primary btn-block" id="login-btn" type="submit">
+          <svg width="16" height="16" aria-hidden="true"><use href="#icon-lock" /></svg>
+          <span id="login-btn-text">Authorize &amp; Open Terminal</span>
         </button>
       </form>
 
-      <div class="login-footer-notice">
-        <span>🛡️ NIC e-PDS Secured</span>
-        <span>Class III Certified Scale</span>
-        <span>Aadhaar KYC Enabled</span>
-      </div>
+      <p class="login-foot">
+        <span>NIC e-PDS secured</span>
+        <span>Class III certified scale</span>
+        <span>Offline capable</span>
+      </p>
     </div>
   </div>
 
-  <!-- ========= POST-LOGIN METRO VIDEO HERO IMMERSIVE SCREEN ========= -->
-  <div id="hero-screen" style="display:none;"></div>
+  <!-- =====================================================================
+       APP
+       ===================================================================== -->
+  <div class="app" id="app" hidden>
 
-  <!-- SVG gradient definitions (referenced by CSS / JS) -->
-  <svg class="gauge-svg-defs" aria-hidden="true" style="position:absolute;width:0;height:0;">
-    <defs>
-      <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#10b981" />
-        <stop offset="50%" stop-color="#3b82f6" />
-        <stop offset="100%" stop-color="#f59e0b" />
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- ========= APP HEADER ========= -->
-  <header class="app-header">
-    <div class="header-left">
-      <div class="header-emblem-wrap">
-        <svg class="header-emblem-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#f59e0b" stroke-width="2.5" fill="#071324" />
-          <path d="M42 72h16v-4h-2v-4h-2v-4h-2v-6h4v-3h-3v-4h2v-3h-2v-4h1.5v-3h-1.5v-3l-2-6h-2l-2 6v3h-1.5v3h2v3h-2v4h2v3h-3v4h4v6h-2v4h-2v4h-2v4z" fill="#f59e0b" />
-          <circle cx="50" cy="18" r="3" fill="#10b981" />
-          <path d="M22 55c0 14 12 25 28 25s28-11 28-25" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" />
-          <circle cx="50" cy="50" r="8" stroke="#3b82f6" stroke-width="1.5" />
-        </svg>
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22"><use href="#icon-emblem" /></svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">Smart Ration Dispenser</span>
+          <span class="brand-dept" lang="ta">தமிழ்நாடு அரசு • உணவு மற்றும் நுகர்வோர் பாதுகாப்புத் துறை</span>
+        </span>
       </div>
-      <div>
-        <div class="logo-dept-ta">தமிழ்நாடு அரசு • பொது விநியோகத் திட்டம்</div>
-        <h1 class="logo-title">SMART RATION DISPENSER</h1>
-        <p class="logo-subtitle">FPS-TN-03-A-042 • Automated PDS Terminal • Department of Food &amp; Civil Supplies</p>
-      </div>
-    </div>
 
-    <div class="header-center">
-      <div class="system-status-pill idle" id="system-status-pill">
-        <span class="status-dot" id="status-dot"></span>
-        <span id="system-status-text">IDLE</span>
+      <div class="header-meta">
+        <span class="status-pill" id="system-status-pill" data-status="IDLE">
+          <span class="status-dot" id="status-dot"></span>
+          <span id="system-status-text">Idle</span>
+        </span>
+        <span class="status-pill" id="wifi-pill">
+          <svg width="14" height="14" aria-hidden="true"><use href="#icon-wifi" /></svg>
+          <span id="wifi-rssi">—</span>
+        </span>
+        <button class="btn btn-ghost btn-sm" id="btn-logout" type="button">
+          <svg width="15" height="15" aria-hidden="true"><use href="#icon-lock" /></svg>
+          Lock
+        </button>
       </div>
-      <div class="wifi-pill" title="ESP32 Wi-Fi Signal Strength">
-        <span>📶</span>
-        <span id="wifi-rssi">-58 dBm (Strong)</span>
-      </div>
-    </div>
+    </header>
 
-    <div class="header-right">
-      <nav class="nav-tabs" role="tablist">
-        <button class="nav-tab active" data-tab="tab-overview" id="navbtn-overview">Live Dispenser</button>
-        <button class="nav-tab" data-tab="tab-beneficiaries" id="navbtn-beneficiaries">Beneficiaries</button>
-        <button class="nav-tab" data-tab="tab-inventory" id="navbtn-inventory">Hoppers &amp; Stock</button>
-        <button class="nav-tab" data-tab="tab-transactions" id="navbtn-transactions">Transactions</button>
-        <button class="nav-tab highlight" data-tab="tab-simulator" id="navbtn-simulator">🎮 Simulator</button>
-      </nav>
-      <button class="logout-btn" id="btn-hero-showcase" style="margin-right:6px;background:rgba(116,185,241,0.12);border:1px solid rgba(116,185,241,0.35);color:#74b9f1;" title="Launch Metro Video Hero">🎬 Hero</button>
-      <button class="logout-btn" id="btn-logout" title="Lock Terminal">🔒 Lock</button>
-    </div>
-  </header>
+    <nav class="tabbar" role="tablist" aria-label="Terminal sections">
+      <button class="tab" role="tab" id="navbtn-overview" data-tab="tab-overview"
+        aria-controls="tab-overview" aria-selected="true" tabindex="0" type="button">
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-dispenser" /></svg>
+        Live Dispenser
+      </button>
+      <button class="tab" role="tab" id="navbtn-beneficiaries" data-tab="tab-beneficiaries"
+        aria-controls="tab-beneficiaries" aria-selected="false" tabindex="-1" type="button">
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-users" /></svg>
+        Beneficiaries
+        <span class="tab-count" id="count-beneficiaries">0</span>
+      </button>
+      <button class="tab" role="tab" id="navbtn-inventory" data-tab="tab-inventory"
+        aria-controls="tab-inventory" aria-selected="false" tabindex="-1" type="button">
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-package" /></svg>
+        Hoppers &amp; Stock
+      </button>
+      <button class="tab" role="tab" id="navbtn-transactions" data-tab="tab-transactions"
+        aria-controls="tab-transactions" aria-selected="false" tabindex="-1" type="button">
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-receipt" /></svg>
+        Transactions
+        <span class="tab-count" id="count-transactions">0</span>
+      </button>
+      <button class="tab" role="tab" id="navbtn-simulator" data-tab="tab-simulator"
+        aria-controls="tab-simulator" aria-selected="false" tabindex="-1" type="button">
+        <svg width="16" height="16" aria-hidden="true"><use href="#icon-sliders" /></svg>
+        Simulator
+      </button>
+    </nav>
 
-  <!-- ========= TICKER BAR: LCD + AUDIO + QUICK STATS ========= -->
-  <section class="ticker-banner">
-    <!-- LCD 20×4 Replica -->
-    <div class="lcd-replica-box">
-      <div class="lcd-screen">
-        <div id="lcd-line-1">SMART RATION PDS</div>
-        <div id="lcd-line-2">SCAN RFID / அட்டை</div>
-      </div>
-    </div>
+    <main class="main">
 
-    <!-- DFPlayer Audio Guidance -->
-    <div class="audio-prompt-box">
-      <div class="speaker-icon">🔊</div>
-      <div>
-        <div class="prompt-label">Audio Guidance — DFPlayer Mini</div>
-        <div class="prompt-content" id="active-audio-prompt">"Welcome. Please scan your ration card."</div>
-        <div class="prompt-content-ta" id="active-audio-prompt-ta">"வணக்கம். உங்கள் குடும்ப அட்டையை ஸ்கேன் செய்யவும்."
+      <!-- ============================ LIVE DISPENSER ==================== -->
+      <section class="panel" id="tab-overview" role="tabpanel" aria-labelledby="navbtn-overview">
+
+        <div class="statbar">
+          <div class="stat">
+            <span class="stat-label">Dispensed today</span>
+            <span class="stat-value" id="stat-dispensed">0.00 <span class="stat-unit">kg</span></span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Served this month</span>
+            <span class="stat-value" id="stat-served">0 / 0</span>
+          </div>
+          <div class="stat stat-accent">
+            <span class="stat-label">Live weight</span>
+            <span class="stat-value"><span id="live-weight-display">0.00</span> <span
+                class="stat-unit">g</span></span>
+          </div>
+          <div class="stat stat-danger">
+            <span class="stat-label">Fraud blocked</span>
+            <span class="stat-value" id="stat-fraud">0</span>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Quick Stats -->
-    <div class="quick-stats-strip">
-      <div class="quick-stat">
-        <span class="qs-label">Today's Dispensed</span>
-        <span class="qs-val" id="stat-dispensed">0.00 kg</span>
-      </div>
-      <div class="quick-stat">
-        <span class="qs-label">Served This Month</span>
-        <span class="qs-val" id="stat-served">0 / 0</span>
-      </div>
-      <div class="quick-stat">
-        <span class="qs-label">Fraud Blocked</span>
-        <span class="qs-val warning" id="stat-fraud">0</span>
-      </div>
-    </div>
-  </section>
+        <div class="grid-dispenser">
 
-  <!-- ========= FULL-SCREEN PINNED SCROLL BOARDS STAGE ========= -->
-  <main class="fx-stage-wrapper" id="fx-root">
-    <div class="fx-scroll">
-      <div class="fx-fixed-section" id="fx-fixed-section">
-        <div class="fx-fixed" id="fx-fixed">
+          <div class="stack">
+          <!-- Machine schematic -->
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h2 class="card-title">Machine</h2>
+                <p class="card-sub">Gravity refill · load-cell feedback · 4× MG995 servo gates</p>
+              </div>
+              <div class="card-tools">
+                <span class="badge mono" id="dispenser-id">ESP32_DISP_01</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="machine">
 
-          <!-- Dynamic Ambient Backgrounds -->
-          <div class="fx-bgs" aria-hidden="true">
-            <div class="fx-bg bg-0 active" id="bg-0">
-              <div class="fx-grid-overlay"></div>
-              <div class="fx-radial-vignette"></div>
-            </div>
-            <div class="fx-bg bg-1" id="bg-1">
-              <div class="fx-grid-overlay"></div>
-              <div class="fx-radial-vignette"></div>
-            </div>
-            <div class="fx-bg bg-2" id="bg-2">
-              <div class="fx-grid-overlay"></div>
-              <div class="fx-radial-vignette"></div>
-            </div>
-            <div class="fx-bg bg-3" id="bg-3">
-              <div class="fx-grid-overlay"></div>
-              <div class="fx-radial-vignette"></div>
-            </div>
-            <div class="fx-bg bg-4" id="bg-4">
-              <div class="fx-grid-overlay"></div>
-              <div class="fx-radial-vignette"></div>
+                <div class="hoppers">
+                  <div class="hopper grain-rice" id="hopper-rice">
+                    <div>
+                      <div class="hopper-name">Rice</div>
+                      <div class="hopper-tam" lang="ta">அரிசி</div>
+                    </div>
+                    <div class="tank">
+                      <div class="tank-fill" id="fill-rice" style="height:0%"></div>
+                      <div class="tank-weight" id="weight-rice">0.0 kg</div>
+                    </div>
+                    <div class="mini-tank">
+                      <div class="mini-fill" id="mini-fill-rice" style="width:0%"></div>
+                      <div class="mini-label">Buffer</div>
+                    </div>
+                    <div class="gate" id="servo-gate-1" data-open="false">
+                      <span class="gate-housing" aria-hidden="true"><span class="gate-arm" id="servo-arm-1"></span></span>
+                      <span id="gate-status-1">Gate 1 closed</span>
+                    </div>
+                  </div>
+
+                  <div class="hopper grain-wheat" id="hopper-wheat">
+                    <div>
+                      <div class="hopper-name">Wheat</div>
+                      <div class="hopper-tam" lang="ta">கோதுமை</div>
+                    </div>
+                    <div class="tank">
+                      <div class="tank-fill" id="fill-wheat" style="height:0%"></div>
+                      <div class="tank-weight" id="weight-wheat">0.0 kg</div>
+                    </div>
+                    <div class="mini-tank">
+                      <div class="mini-fill" id="mini-fill-wheat" style="width:0%"></div>
+                      <div class="mini-label">Buffer</div>
+                    </div>
+                    <div class="gate" id="servo-gate-2" data-open="false">
+                      <span class="gate-housing" aria-hidden="true"><span class="gate-arm" id="servo-arm-2"></span></span>
+                      <span id="gate-status-2">Gate 2 closed</span>
+                    </div>
+                  </div>
+
+                  <div class="hopper grain-dal" id="hopper-dal">
+                    <div>
+                      <div class="hopper-name">Toor Dal</div>
+                      <div class="hopper-tam" lang="ta">பருப்பு</div>
+                    </div>
+                    <div class="tank">
+                      <div class="tank-fill" id="fill-dal" style="height:0%"></div>
+                      <div class="tank-weight" id="weight-dal">0.0 kg</div>
+                    </div>
+                    <div class="mini-tank">
+                      <div class="mini-fill" id="mini-fill-dal" style="width:0%"></div>
+                      <div class="mini-label">Buffer</div>
+                    </div>
+                    <div class="gate" id="servo-gate-3" data-open="false">
+                      <span class="gate-housing" aria-hidden="true"><span class="gate-arm" id="servo-arm-3"></span></span>
+                      <span id="gate-status-3">Gate 3 closed</span>
+                    </div>
+                  </div>
+
+                  <div class="hopper grain-sugar" id="hopper-sugar">
+                    <div>
+                      <div class="hopper-name">Sugar</div>
+                      <div class="hopper-tam" lang="ta">சர்க்கரை</div>
+                    </div>
+                    <div class="tank">
+                      <div class="tank-fill" id="fill-sugar" style="height:0%"></div>
+                      <div class="tank-weight" id="weight-sugar">0.0 kg</div>
+                    </div>
+                    <div class="mini-tank">
+                      <div class="mini-fill" id="mini-fill-sugar" style="width:0%"></div>
+                      <div class="mini-label">Buffer</div>
+                    </div>
+                    <div class="gate" id="servo-gate-4" data-open="false">
+                      <span class="gate-housing" aria-hidden="true"><span class="gate-arm" id="servo-arm-4"></span></span>
+                      <span id="gate-status-4">Gate 4 closed</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="funnel">
+                  <div class="funnel-cone"></div>
+                  <div class="funnel-spout" aria-hidden="true"></div>
+                  <div class="grain-stream" id="grain-stream"></div>
+                  <p class="funnel-label">Food-grade common funnel</p>
+                </div>
+
+                <div class="chamber">
+                  <div class="sensor" id="ir-container-indicator">
+                    <span class="sensor-dot" id="ir-container-dot"></span>
+                    IR-1 container
+                  </div>
+
+                  <div class="container-stage">
+                    <div class="vessel" id="collection-container">
+                      <div class="vessel-grain" id="container-grain-level"></div>
+                      <div class="vessel-text" id="container-status-text">No container</div>
+                    </div>
+                    <div class="scale-base"></div>
+                    <div class="scale-readout"><span id="scale-weight">0.00</span> <span
+                        class="scale-unit">g</span></div>
+                  </div>
+
+                  <div class="sensor sensor-right" id="ir-hopper-indicator">
+                    <span class="sensor-dot active" id="ir-hopper-dot"></span>
+                    IR-2 hopper
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
 
-          <!-- 3-Column Grid Stage -->
-          <div class="fx-grid">
-
-            <!-- Left Track: 5 Boards List -->
-            <div class="fx-left" role="list">
-              <div class="fx-track" id="left-track">
-                <div class="fx-item fx-left-item active" data-index="0" role="button" tabindex="0">Live Dispenser</div>
-                <div class="fx-item fx-left-item" data-index="1" role="button" tabindex="0">Beneficiaries</div>
-                <div class="fx-item fx-left-item" data-index="2" role="button" tabindex="0">Hoppers &amp; Stock</div>
-                <div class="fx-item fx-left-item" data-index="3" role="button" tabindex="0">Transactions</div>
-                <div class="fx-item fx-left-item" data-index="4" role="button" tabindex="0">🎮 Simulator</div>
+          <!-- Charts fill the space under the schematic and rebalance the
+               two columns, which previously ended at very different heights. -->
+          <div class="card" id="charts-card">
+            <div class="card-head">
+              <div>
+                <h2 class="card-title">Stock &amp; throughput</h2>
+                <p class="card-sub">Which hopper needs attention, and how much is moving</p>
               </div>
             </div>
-
-            <!-- Center Stage: The 5 Boards with Animated Titles & Complete Detail Panels -->
-            <div class="fx-center">
-
-              <!-- BOARD 0: LIVE DISPENSER -->
-              <div class="fx-featured active" id="featured-0">
-                <h2 class="fx-featured-title" data-title="LIVE DISPENSER"></h2>
-                <div class="board-stage-pane">
-                  <div class="tab-pane active" id="tab-overview">
-      <div class="overview-grid">
-
-        <!-- LEFT: Machine Hardware Schematic -->
-        <div class="card machine-viz-card">
-          <div class="card-header">
-            <div class="card-title-group">
-              <h2 class="card-title">Machine Hardware Architecture</h2>
-              <p class="card-subtitle">Gravity Refill · Load Cell Feedback · 3× MG995 Servo Gates</p>
-            </div>
-            <div class="dispenser-id-tag">UNIT: ESP32-WROOM-01</div>
+            <div class="card-body stack" id="charts-body"></div>
           </div>
+        </div>
 
-          <!-- Mechanical Schematic -->
-          <div class="machine-schematic-container">
+          <!-- Right column -->
+          <div class="stack">
 
-            <!-- 4 Main Hoppers -->
-            <div class="hoppers-level">
-              <!-- Rice -->
-              <div class="hopper-column" id="hopper-rice">
-                <div class="hopper-header">
-                  <span class="hopper-name">RICE</span>
-                  <span class="hopper-tam">அரிசி</span>
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">HX711 load cell</h2>
+                  <p class="card-sub">Closed-loop weight feedback</p>
                 </div>
-                <div class="hopper-tank main-tank">
-                  <div class="tank-fill" id="fill-rice" style="height:70%"></div>
-                  <span class="tank-weight" id="weight-rice">35.0 kg</span>
-                </div>
-                <div class="gravity-pipe"><span class="pipe-arrow">↓</span></div>
-                <div class="mini-hopper">
-                  <div class="mini-fill" id="mini-fill-rice" style="height:84%"></div>
-                  <span class="mini-label">Mini: 4.2 kg</span>
-                </div>
-                <div class="servo-gate" id="servo-gate-1">
-                  <div class="servo-arm" id="servo-arm-1"></div>
-                  <span class="gate-status" id="gate-status-1">GATE 1 CLOSED</span>
+                <div class="card-tools">
+                  <span class="badge badge-accent" id="telemetry-live-badge">Live</span>
                 </div>
               </div>
-
-              <!-- Wheat -->
-              <div class="hopper-column" id="hopper-wheat">
-                <div class="hopper-header">
-                  <span class="hopper-name">WHEAT</span>
-                  <span class="hopper-tam">கோதுமை</span>
-                </div>
-                <div class="hopper-tank main-tank">
-                  <div class="tank-fill" id="fill-wheat" style="height:56%"></div>
-                  <span class="tank-weight" id="weight-wheat">28.0 kg</span>
-                </div>
-                <div class="gravity-pipe"><span class="pipe-arrow">↓</span></div>
-                <div class="mini-hopper">
-                  <div class="mini-fill" id="mini-fill-wheat" style="height:76%"></div>
-                  <span class="mini-label">Mini: 3.8 kg</span>
-                </div>
-                <div class="servo-gate" id="servo-gate-2">
-                  <div class="servo-arm" id="servo-arm-2"></div>
-                  <span class="gate-status" id="gate-status-2">GATE 2 CLOSED</span>
-                </div>
-              </div>
-
-              <!-- Toor Dal -->
-              <div class="hopper-column" id="hopper-dal">
-                <div class="hopper-header">
-                  <span class="hopper-name">TOOR DAL</span>
-                  <span class="hopper-tam">பருப்பு</span>
-                </div>
-                <div class="hopper-tank main-tank">
-                  <div class="tank-fill" id="fill-dal" style="height:60%"></div>
-                  <span class="tank-weight" id="weight-dal">15.0 kg</span>
-                </div>
-                <div class="gravity-pipe"><span class="pipe-arrow">↓</span></div>
-                <div class="mini-hopper">
-                  <div class="mini-fill" id="mini-fill-dal" style="height:83%"></div>
-                  <span class="mini-label">Mini: 2.5 kg</span>
-                </div>
-                <div class="servo-gate" id="servo-gate-3">
-                  <div class="servo-arm" id="servo-arm-3"></div>
-                  <span class="gate-status" id="gate-status-3">GATE 3 CLOSED</span>
-                </div>
-              </div>
-
-              <!-- Sugar -->
-              <div class="hopper-column" id="hopper-sugar">
-                <div class="hopper-header">
-                  <span class="hopper-name">SUGAR</span>
-                  <span class="hopper-tam">சர்க்கரை</span>
-                </div>
-                <div class="hopper-tank main-tank">
-                  <div class="tank-fill" id="fill-sugar" style="height:66%"></div>
-                  <span class="tank-weight" id="weight-sugar">20.0 kg</span>
-                </div>
-                <div class="gravity-pipe"><span class="pipe-arrow">↓</span></div>
-                <div class="mini-hopper">
-                  <div class="mini-fill" id="mini-fill-sugar" style="height:96%"></div>
-                  <span class="mini-label">Mini: 2.9 kg</span>
-                </div>
-                <div class="servo-gate" id="servo-gate-4">
-                  <div class="servo-arm" id="servo-arm-4"></div>
-                  <span class="gate-status" id="gate-status-4">GATE 4 CLOSED</span>
-                </div>
-              </div>
-            </div><!-- /hoppers-level -->
-
-            <!-- Common Funnel -->
-            <div class="common-funnel-box">
-              <div class="funnel-cone">
-                <div class="grain-particle-stream" id="grain-stream"></div>
-                <span class="funnel-label">Food-Grade Funnel</span>
-              </div>
-              <div class="funnel-spout"></div>
-            </div>
-
-            <!-- Dispensing Chamber -->
-            <div class="dispensing-chamber">
-              <!-- IR-1: Container Detection -->
-              <div class="ir-sensor-indicator" id="ir-container-indicator">
-                <div class="ir-beam" id="ir-beam-line"></div>
-                <div class="ir-badge">
-                  <span class="sensor-dot" id="ir-container-dot"></span>
-                  <span class="sensor-title">IR-1 Container</span>
-                </div>
-              </div>
-
-              <!-- Collection Container + Load Cell -->
-              <div class="container-stage">
-                <div class="collection-container" id="collection-container">
-                  <div class="container-grain-level" id="container-grain-level"></div>
-                  <span class="container-text" id="container-status-text">NO CONTAINER</span>
-                </div>
-                <div class="load-cell-base">
-                  <div class="lc-strain-gauge">HX711 Strain Gauge · 5 kg</div>
-                  <div class="load-cell-readout">
-                    <span class="lc-weight-live" id="live-weight-display">0.00</span>
-                    <span class="lc-weight-unit">g</span>
+              <div class="card-body">
+                <div class="gauge">
+                  <div class="gauge-ring">
+                    <svg viewBox="0 0 168 168" aria-hidden="true">
+                      <circle class="gauge-track" cx="84" cy="84" r="66" />
+                      <circle class="gauge-value" id="load-cell-ring" cx="84" cy="84" r="66" />
+                    </svg>
+                    <div class="gauge-center">
+                      <span class="gauge-num" id="gauge-weight-val">0</span>
+                      <span class="gauge-sub">GRAMS</span>
+                    </div>
+                  </div>
+                  <div class="rows" style="width:100%">
+                    <div class="row">
+                      <span class="row-label">Target weight</span>
+                      <span class="row-value" id="telemetry-target-weight">500 g</span>
+                    </div>
+                    <div class="row">
+                      <span class="row-label">Selected grain</span>
+                      <span class="row-value" id="telemetry-selected-grain">None</span>
+                    </div>
+                    <div class="row">
+                      <span class="row-label">Active gate</span>
+                      <span class="row-value" id="active-servo-text">All locked (0°)</span>
+                    </div>
+                    <div class="row">
+                      <span class="row-label">Cutoff accuracy</span>
+                      <span class="row-value text-success">±1.5 g</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <!-- IR-2: Hopper Level -->
-              <div class="ir-sensor-indicator right" id="ir-hopper-indicator">
-                <div class="ir-badge">
-                  <span class="sensor-dot active" id="ir-hopper-dot"></span>
-                  <span class="sensor-title">IR-2 Hopper OK</span>
-                </div>
-              </div>
-            </div><!-- /dispensing-chamber -->
-
-          </div><!-- /machine-schematic-container -->
-        </div><!-- /machine-viz-card -->
-
-        <!-- RIGHT: Telemetry Sidebar -->
-        <div class="overview-sidebar">
-
-          <!-- HX711 Load Cell Telemetry -->
-          <div class="card telemetry-card">
-            <div class="card-header">
-              <h3 class="card-title">HX711 Load Cell Telemetry</h3>
-              <span class="live-pulse-badge">● LIVE</span>
             </div>
 
-            <div class="gauge-section">
-              <div class="circular-progress-wrap">
-                <svg class="progress-ring" viewBox="0 0 130 130" width="130" height="130">
-                  <circle stroke="rgba(255,255,255,0.06)" stroke-width="11" fill="transparent" r="52" cx="65" cy="65" />
-                  <circle id="load-cell-ring" stroke="url(#gaugeGrad)" stroke-width="11" stroke-dasharray="326.73"
-                    stroke-dashoffset="326.73" stroke-linecap="round" fill="transparent" r="52" cx="65" cy="65"
-                    style="filter:drop-shadow(0 0 8px rgba(0,229,255,0.55));transition:stroke-dashoffset 0.5s cubic-bezier(0.16,1,0.3,1);" />
-                </svg>
-                <div class="gauge-center">
-                  <div class="gauge-num" id="gauge-weight-val">0</div>
-                  <div class="gauge-sub">GRAMS</div>
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <h2 class="card-title">Beneficiary</h2>
+                </div>
+                <div class="card-tools">
+                  <span class="badge" id="auth-status-pill">Awaiting scan</span>
                 </div>
               </div>
-
-              <div class="cutoff-details">
-                <div class="metric-row">
-                  <span class="m-label">Target Weight</span>
-                  <span class="m-val" id="telemetry-target-weight">0 g</span>
-                </div>
-                <div class="metric-row">
-                  <span class="m-label">Selected Grain</span>
-                  <span class="m-val highlight" id="telemetry-selected-grain">None</span>
-                </div>
-                <div class="metric-row">
-                  <span class="m-label">Tare Baseline</span>
-                  <span class="m-val">0.00 g (Auto-Zeroed)</span>
-                </div>
-                <div class="metric-row">
-                  <span class="m-label">Cutoff Accuracy</span>
-                  <span class="m-val text-success">±1.5 grams</span>
+              <div class="card-body" id="auth-details-body">
+                <div class="auth-empty">
+                  <svg width="34" height="34" aria-hidden="true"><use href="#icon-card" /></svg>
+                  <p>Scan an RFID ration card, or use the Simulator tab to start a collection.</p>
                 </div>
               </div>
             </div>
 
-            <div class="active-servo-box">
-              <span class="as-label">Active Gate Valve:</span>
-              <span class="as-val" id="active-servo-text">All Locked (0°)</span>
-            </div>
-          </div>
-
-          <!-- Beneficiary Auth Card -->
-          <div class="card beneficiary-active-card">
-            <div class="card-header">
-              <h3 class="card-title">Beneficiary Auth</h3>
-              <span class="auth-pill" id="auth-status-pill">Awaiting RFID Scan</span>
-            </div>
-
-            <div class="auth-details-body" id="auth-details-body">
-              <div class="auth-placeholder">
-                <div class="rfid-card-anim">💳</div>
-                <p>Scan RFID card or use the Simulator tab to begin ration collection.</p>
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Terminal display</h2>
               </div>
-            </div>
-          </div>
-
-          <!-- Quick Controls -->
-          <div class="card actions-card">
-            <div class="card-header">
-              <h3 class="card-title">Quick Edge Controls</h3>
-            </div>
-            <div class="quick-btn-grid">
-              <button class="btn btn-secondary" id="btn-emergency-stop">🛑 Emergency Stop</button>
-              <button class="btn btn-secondary" id="btn-tare-scale">⚖️ Tare Load Cell</button>
-              <button class="btn btn-secondary" id="btn-test-audio">🔊 Test DFPlayer</button>
-              <button class="btn btn-primary" id="btn-open-simulator">🎮 Open Simulator</button>
-            </div>
-          </div><!-- /actions-card -->
-        </div><!-- /overview-sidebar -->
-      </div><!-- /overview-grid -->
-    </div><!-- /tab-overview -->
-  </div><!-- /board-stage-pane -->
-</div><!-- /featured-0 -->
-
-  <!-- BOARD 1: BENEFICIARIES -->
-  <div class="fx-featured" id="featured-1">
-    <h2 class="fx-featured-title" data-title="BENEFICIARIES"></h2>
-    <div class="board-stage-pane">
-      <div class="tab-pane" id="tab-beneficiaries">
-        <div class="card full-width-card">
-          <div class="card-header space-between">
-            <div>
-              <h2 class="card-title">Beneficiary &amp; Ration Card Database</h2>
-              <p class="card-subtitle">Manage cardholders, monthly entitlements, and biometric fingerprint mapping</p>
-            </div>
-            <div class="card-actions">
-              <button class="btn btn-secondary" id="btn-reset-all-month">🔄 Reset Month Quotas</button>
-              <button class="btn btn-primary" id="btn-add-beneficiary">+ Enroll New Beneficiary</button>
-            </div>
-          </div>
-
-          <div class="table-filters-bar">
-            <input type="text" id="beneficiary-search" class="search-input"
-              placeholder="🔍 Search by name, Ration Card No, or RFID UID…">
-            <div class="filter-group">
-              <button class="filter-pill active" data-filter="all">All</button>
-              <button class="filter-pill" data-filter="pending">Pending Collection</button>
-              <button class="filter-pill" data-filter="collected">Collected</button>
-            </div>
-          </div>
-
-          <div class="table-responsive">
-            <table class="data-table" id="beneficiaries-table">
-              <thead>
-                <tr>
-                  <th>Ration Card No</th>
-                  <th>Beneficiary Name</th>
-                  <th>RFID UID</th>
-                  <th>Biometric ID</th>
-                  <th>Card Scheme</th>
-                  <th>Monthly Quota</th>
-                  <th>Month Status</th>
-                  <th>Last Collected</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="beneficiaries-tbody">
-                <!-- Loaded dynamically -->
-              </tbody>
-            </table>
-          </div><!-- /table-responsive -->
-        </div><!-- /card -->
-      </div><!-- /tab-beneficiaries -->
-    </div><!-- /board-stage-pane -->
-  </div><!-- /featured-1 -->
-
-  <!-- BOARD 2: HOPPERS & STOCK -->
-  <div class="fx-featured" id="featured-2">
-    <h2 class="fx-featured-title" data-title="HOPPERS & STOCK"></h2>
-    <div class="board-stage-pane">
-      <div class="tab-pane" id="tab-inventory">
-        <div class="card full-width-card">
-          <div class="card-header space-between">
-            <div>
-              <h2 class="card-title">Grain Hoppers &amp; Auto-Refill Monitoring</h2>
-              <p class="card-subtitle">Gravity-pipe buffer tracking — Main Hoppers → Mini Hopper → Dispense Gate</p>
-            </div>
-            <button class="btn btn-primary" id="btn-bulk-refill">📦 Bulk Stock Refill</button>
-          </div>
-
-          <div class="inventory-cards-container" id="inventory-cards-container">
-            <!-- Rendered dynamically by app.js -->
-          </div><!-- /inventory-cards-container -->
-        </div><!-- /card -->
-      </div><!-- /tab-inventory -->
-    </div><!-- /board-stage-pane -->
-  </div><!-- /featured-2 -->
-
-  <!-- BOARD 3: TRANSACTIONS -->
-  <div class="fx-featured" id="featured-3">
-    <h2 class="fx-featured-title" data-title="TRANSACTIONS"></h2>
-    <div class="board-stage-pane">
-      <div class="tab-pane" id="tab-transactions">
-        <div class="card full-width-card">
-          <div class="card-header space-between">
-            <div>
-              <h2 class="card-title">Dispense Transactions &amp; Fraud Prevention Audit</h2>
-              <p class="card-subtitle">Tamper-evident logs of every grain dispensation and biometric authentication event</p>
-            </div>
-            <button class="btn btn-secondary" id="btn-export-csv">📥 Export CSV Audit</button>
-          </div>
-
-          <div class="table-responsive">
-            <table class="data-table" id="transactions-table">
-              <thead>
-                <tr>
-                  <th>Txn ID</th>
-                  <th>Timestamp</th>
-                  <th>Beneficiary</th>
-                  <th>Ration Card No</th>
-                  <th>Commodity</th>
-                  <th>Target</th>
-                  <th>Actual Weight</th>
-                  <th>Auth Verification</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="transactions-tbody">
-                <!-- Loaded dynamically -->
-              </tbody>
-            </table>
-          </div><!-- /table-responsive -->
-        </div><!-- /card -->
-      </div><!-- /tab-transactions -->
-    </div><!-- /board-stage-pane -->
-  </div><!-- /featured-3 -->
-
-              <!-- BOARD 4: SIMULATOR -->
-              <div class="fx-featured" id="featured-4">
-                <h2 class="fx-featured-title" data-title="VIRTUAL SIMULATOR"></h2>
-                <div class="board-stage-pane">
-                  <div class="tab-pane" id="tab-simulator">
-      <div class="simulator-layout">
-
-        <!-- Left: Simulator Steps -->
-        <div class="card simulator-panel">
-          <div class="card-header">
-            <div class="card-title-group">
-              <h2 class="card-title">🎮 ESP32 &amp; Physical Sensor Virtual Test Bench</h2>
-              <p class="card-subtitle">Simulate RFID · R307S Biometrics · IR Sensors · Servo Gates · Load Cell</p>
-            </div>
-            <span class="card-badge bg-primary">Hardware-in-the-Loop</span>
-          </div>
-
-          <p class="sim-desc">
-            Test the complete end-to-end hardware workflow without needing the physical ESP32 or breadboard connected.
-            Simulate RFID tapping, R307S fingerprint scanning, container placement on IR sensors, servo gate opening,
-            and load cell weight buildup.
-          </p>
-
-          <div class="simulator-steps">
-
-            <!-- Step 1: RFID -->
-            <div class="sim-step-box" id="sim-step-rfid">
-              <div class="step-num">1</div>
-              <div class="step-content">
-                <h4>RFID Card Reader (MFRC522)</h4>
-                <p>Choose an enrolled cardholder or enter an arbitrary RFID UID to test valid scans vs duplicate
-                  prevention.</p>
-                <div class="sim-input-row">
-                  <select id="sim-select-card" class="sim-select">
-                    <option value="E23A4B5C">Muthu Krishnan (E23A4B5C) — Eligible [Rice 500g, Wheat 500g]</option>
-                    <option value="A1B2C3D4">Selvi Anbarasan (A1B2C3D4) — [Already Collected This Month]</option>
-                    <option value="4F5E6D7C">Rajesh Kumar (4F5E6D7C) — Eligible [Rice 500g, Wheat 500g]</option>
-                    <option value="12345678">Kavitha Sundaram (12345678) — Eligible</option>
-                    <option value="DEADBEEF">Unregistered Card (DEADBEEF) — Test Rejection</option>
-                  </select>
-                  <button class="btn btn-primary" id="sim-btn-tap-rfid">💳 Tap RFID Card</button>
+              <div class="card-body stack">
+                <div class="lcd">
+                  <div class="lcd-line" id="lcd-line-1">SMART RATION PDS</div>
+                  <div class="lcd-line" id="lcd-line-2">SCAN RFID CARD</div>
+                </div>
+                <div class="audio-prompt">
+                  <span class="audio-prompt-icon" aria-hidden="true">
+                    <svg width="18" height="18"><use href="#icon-volume" /></svg>
+                  </span>
+                  <span>
+                    <span class="audio-prompt-label">DFPlayer audio guidance</span>
+                    <span class="audio-prompt-en" id="active-audio-prompt">Welcome. Please scan your ration
+                      card.</span>
+                    <span class="audio-prompt-ta" id="active-audio-prompt-ta" lang="ta">வணக்கம். உங்கள்
+                      குடும்ப அட்டையை ஸ்கேன் செய்யவும்.</span>
+                  </span>
                 </div>
               </div>
             </div>
 
-            <!-- Step 2: Fingerprint -->
-            <div class="sim-step-box" id="sim-step-fp">
-              <div class="step-num">2</div>
-              <div class="step-content">
-                <h4>Fingerprint Sensor (R307S Optical)</h4>
-                <p>2-Factor verification: verify biometric fingerprint template match against the card owner.</p>
-                <div class="sim-btn-row">
-                  <button class="btn btn-secondary" id="sim-btn-match-fp">👆 Match Fingerprint (Success)</button>
-                  <button class="btn btn-outline" id="sim-btn-fail-fp">❌ Mismatched Fingerprint (Fail Test)</button>
-                </div>
+            <div class="card">
+              <div class="card-head">
+                <h2 class="card-title">Quick actions</h2>
               </div>
-            </div>
-
-            <!-- Step 3: Language & Grain Selection -->
-            <div class="sim-step-box" id="sim-step-grain">
-              <div class="step-num">3</div>
-              <div class="step-content">
-                <h4>Language &amp; Commodity Selection</h4>
-                <p>Select beneficiary language and commodity quota to dispense.</p>
-
-                <div class="sim-lang-buttons">
-                  <button class="btn-lang active" data-lang="EN">🇬🇧 English</button>
-                  <button class="btn-lang" data-lang="TA">🇮🇳 தமிழ் (Tamil)</button>
-                </div>
-
-                <div class="sim-grain-grid" id="sim-grain-buttons">
-                  <button class="grain-btn" data-grain="rice" data-target="500" data-servo="1">
-                    <span class="gb-icon">🌾</span>
-                    <span class="gb-name">Rice / அரிசி</span>
-                    <span class="gb-quota">500 g</span>
+              <div class="card-body">
+                <div class="form-grid">
+                  <button class="btn btn-danger" id="btn-emergency-stop" type="button">
+                    <svg width="16" height="16" aria-hidden="true"><use href="#icon-stop" /></svg>
+                    Emergency stop
                   </button>
-                  <button class="grain-btn" data-grain="wheat" data-target="500" data-servo="2">
-                    <span class="gb-icon">🥖</span>
-                    <span class="gb-name">Wheat / கோதுமை</span>
-                    <span class="gb-quota">500 g</span>
+                  <button class="btn btn-ghost" id="btn-tare-scale" type="button">
+                    <svg width="16" height="16" aria-hidden="true"><use href="#icon-scale" /></svg>
+                    Tare scale
                   </button>
-                  <button class="grain-btn" data-grain="dal" data-target="250" data-servo="3">
-                    <span class="gb-icon">🥣</span>
-                    <span class="gb-name">Toor Dal / பருப்பு</span>
-                    <span class="gb-quota">250 g</span>
+                  <button class="btn btn-ghost" id="btn-test-audio" type="button">
+                    <svg width="16" height="16" aria-hidden="true"><use href="#icon-volume" /></svg>
+                    Test audio
                   </button>
-                  <button class="grain-btn" data-grain="sugar" data-target="250" data-servo="4">
-                    <span class="gb-icon">🧂</span>
-                    <span class="gb-name">Sugar / சர்க்கரை</span>
-                    <span class="gb-quota">250 g</span>
+                  <button class="btn btn-accent" id="btn-open-simulator" type="button">
+                    <svg width="16" height="16" aria-hidden="true"><use href="#icon-sliders" /></svg>
+                    Open simulator
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Step 4: Container & Dispense -->
-            <div class="sim-step-box" id="sim-step-dispense">
-              <div class="step-num">4</div>
-              <div class="step-content">
-                <h4>IR Sensor &amp; Load Cell Dispensing</h4>
-                <p>Place container on scale beneath common funnel, then actuate servo gate valve.</p>
-                <div class="sim-actions-row">
-                  <button class="btn btn-secondary" id="sim-btn-toggle-container">🫙 Place Container on Scale
-                    (IR-1)</button>
-                  <button class="btn btn-success" id="sim-btn-start-dispense" disabled>▶️ Start Dispensing</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ BENEFICIARIES ===================== -->
+      <section class="panel" id="tab-beneficiaries" role="tabpanel"
+        aria-labelledby="navbtn-beneficiaries" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Beneficiaries</h2>
+            <p class="panel-sub">Enrolled ration card holders and monthly collection status</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-ghost" id="btn-reset-all-month" type="button">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-refresh" /></svg>
+              Reset month
+            </button>
+            <button class="btn btn-primary" id="btn-add-beneficiary" type="button">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus" /></svg>
+              Enroll
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="toolbar">
+            <div class="search">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-search" /></svg>
+              <label class="sr-only" for="beneficiary-search">Search beneficiaries</label>
+              <input id="beneficiary-search" type="search" placeholder="Search name, card number or UID">
+            </div>
+            <div class="filters" role="group" aria-label="Filter by collection status">
+              <button class="filter" data-filter="all" aria-pressed="true" type="button">All</button>
+              <button class="filter" data-filter="pending" aria-pressed="false" type="button">Pending</button>
+              <button class="filter" data-filter="collected" aria-pressed="false"
+                type="button">Collected</button>
+            </div>
+          </div>
+          <div class="card-body card-body-flush">
+            <div class="table-wrap">
+              <table class="table" id="beneficiaries-table">
+                <thead>
+                  <tr>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="name">Beneficiary<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="ration_card_no">Ration card<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col">RFID UID</th>
+                    <th scope="col">Type</th>
+                    <th scope="col" class="num"><button class="th-sort" type="button" data-sort="family_members">Family<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col" class="num">Quota R/W/D/S (g)</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="last_collected_at">Last collected<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col"><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody id="beneficiaries-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ HOPPERS & STOCK =================== -->
+      <section class="panel" id="tab-inventory" role="tabpanel" aria-labelledby="navbtn-inventory" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Hoppers &amp; stock</h2>
+            <p class="panel-sub">Main silo and buffer hopper levels across all four commodities</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-primary" id="btn-bulk-refill" type="button">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-package" /></svg>
+              Bulk refill all
+            </button>
+          </div>
+        </div>
+        <div class="grid-stock stagger" id="inventory-cards-container"></div>
+      </section>
+
+      <!-- ============================ TRANSACTIONS ====================== -->
+      <section class="panel" id="tab-transactions" role="tabpanel"
+        aria-labelledby="navbtn-transactions" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Transactions</h2>
+            <p class="panel-sub">Immutable dispensing ledger with weight accuracy audit</p>
+          </div>
+          <div class="panel-actions">
+            <button class="btn btn-ghost" id="btn-export-csv" type="button">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-download" /></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="toolbar">
+            <div class="search">
+              <svg width="16" height="16" aria-hidden="true"><use href="#icon-search" /></svg>
+              <label class="sr-only" for="transaction-search">Search transactions</label>
+              <input id="transaction-search" type="search"
+                placeholder="Search transaction ID, beneficiary or card">
+            </div>
+            <div class="filters" role="group" aria-label="Filter by commodity">
+              <button class="filter" data-txfilter="all" aria-pressed="true" type="button">All</button>
+              <button class="filter" data-txfilter="rice" aria-pressed="false" type="button">Rice</button>
+              <button class="filter" data-txfilter="wheat" aria-pressed="false" type="button">Wheat</button>
+              <button class="filter" data-txfilter="dal" aria-pressed="false" type="button">Dal</button>
+              <button class="filter" data-txfilter="sugar" aria-pressed="false" type="button">Sugar</button>
+            </div>
+          </div>
+          <div class="card-body card-body-flush">
+            <div class="table-wrap">
+              <table class="table" id="transactions-table">
+                <thead>
+                  <tr>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="transaction_id">Transaction<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="beneficiary_name">Beneficiary<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="commodity">Commodity<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col" class="num">Target</th>
+                    <th scope="col" class="num"><button class="th-sort" type="button" data-sort="dispensed_weight_g">Dispensed<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                    <th scope="col" class="num">Variance</th>
+                    <th scope="col">Auth mode</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><button class="th-sort" type="button" data-sort="timestamp">Timestamp<svg class="th-sort-icon" width="11" height="11" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button></th>
+                  </tr>
+                </thead>
+                <tbody id="transactions-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ SIMULATOR ========================= -->
+      <section class="panel" id="tab-simulator" role="tabpanel" aria-labelledby="navbtn-simulator" hidden>
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">Virtual hardware bench</h2>
+            <p class="panel-sub">Drive a full collection without the ESP32 connected</p>
+          </div>
+        </div>
+
+        <div class="grid-sim">
+          <div class="card">
+            <div class="card-head">
+              <h2 class="card-title">Collection sequence</h2>
+              <div class="card-tools">
+                <span class="badge badge-accent">Emulated</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="steps">
+
+                <div class="step active" id="sim-step-rfid">
+                  <span class="step-num">1</span>
+                  <div>
+                    <div class="step-title">Present RFID card</div>
+                    <p class="step-hint">MFRC522 reader · 13.56 MHz</p>
+                    <div class="step-controls">
+                      <label class="sr-only" for="sim-select-card">Select card</label>
+                      <select class="select" id="sim-select-card">
+                        <option value="E23A4B5C">Muthu Krishnan — E23A4B5C</option>
+                        <option value="A1B2C3D4">Selvi Anbarasan — A1B2C3D4</option>
+                        <option value="4F5E6D7C">Rajendran P — 4F5E6D7C</option>
+                        <option value="12345678">Lakshmi Devi — 12345678</option>
+                        <option value="DEADBEEF">Unknown card — DEADBEEF</option>
+                      </select>
+                      <button class="btn btn-accent" id="sim-btn-tap-rfid" type="button">
+                        <svg width="16" height="16" aria-hidden="true"><use href="#icon-card" /></svg>
+                        Tap card
+                      </button>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="step" id="sim-step-fp">
+                  <span class="step-num">2</span>
+                  <div>
+                    <div class="step-title">Verify fingerprint</div>
+                    <p class="step-hint">R307S optical sensor · Aadhaar-linked template</p>
+                    <div class="step-controls">
+                      <button class="btn btn-success" id="sim-btn-match-fp" type="button">
+                        <svg width="16" height="16" aria-hidden="true"><use href="#icon-fingerprint" /></svg>
+                        Match
+                      </button>
+                      <button class="btn btn-danger" id="sim-btn-fail-fp" type="button">
+                        <svg width="16" height="16" aria-hidden="true"><use href="#icon-x" /></svg>
+                        Force mismatch
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step" id="sim-step-grain">
+                  <span class="step-num">3</span>
+                  <div>
+                    <div class="step-title">Select commodity</div>
+                    <p class="step-hint">Audio prompt language and grain choice</p>
+                    <div class="step-controls">
+                      <div class="lang-group" role="group" aria-label="Audio prompt language">
+                        <button class="lang active" data-lang="EN" type="button">English</button>
+                        <button class="lang" data-lang="TA" type="button" lang="ta">தமிழ்</button>
+                      </div>
+                    </div>
+                    <div class="grain-grid" id="sim-grain-buttons">
+                      <button class="grain-btn grain-rice" data-grain="rice" data-target="500"
+                        data-servo="1" type="button">
+                        <span class="gb-name">Rice</span>
+                        <span class="gb-tam" lang="ta">அரிசி</span>
+                        <span class="gb-quota">500 g</span>
+                      </button>
+                      <button class="grain-btn grain-wheat" data-grain="wheat" data-target="500"
+                        data-servo="2" type="button">
+                        <span class="gb-name">Wheat</span>
+                        <span class="gb-tam" lang="ta">கோதுமை</span>
+                        <span class="gb-quota">500 g</span>
+                      </button>
+                      <button class="grain-btn grain-dal" data-grain="dal" data-target="250"
+                        data-servo="3" type="button">
+                        <span class="gb-name">Toor Dal</span>
+                        <span class="gb-tam" lang="ta">பருப்பு</span>
+                        <span class="gb-quota">250 g</span>
+                      </button>
+                      <button class="grain-btn grain-sugar" data-grain="sugar" data-target="250"
+                        data-servo="4" type="button">
+                        <span class="gb-name">Sugar</span>
+                        <span class="gb-tam" lang="ta">சர்க்கரை</span>
+                        <span class="gb-quota">250 g</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step" id="sim-step-dispense">
+                  <span class="step-num">4</span>
+                  <div>
+                    <div class="step-title">Place container &amp; dispense</div>
+                    <p class="step-hint">IR-1 detection then closed-loop servo dispensing</p>
+                    <div class="step-controls">
+                      <button class="btn btn-ghost" id="sim-btn-toggle-container" type="button">
+                        Place container on scale
+                      </button>
+                      <button class="btn btn-success" id="sim-btn-start-dispense" type="button" disabled>
+                        <svg width="16" height="16" aria-hidden="true"><use href="#icon-dispenser" /></svg>
+                        Start dispensing
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
-
-          </div><!-- /simulator-steps -->
-        </div><!-- /simulator-panel -->
-
-        <!-- Right: Virtual Serial Monitor -->
-        <div class="card sim-console-card">
-          <div class="card-header">
-            <h3 class="card-title">Virtual Serial Monitor &amp; Logic Analyzer</h3>
-            <button class="btn-xs" id="sim-clear-logs">Clear</button>
           </div>
-          <div class="sim-console" id="sim-console">
-            <div class="log-entry system">[SYSTEM INIT] ESP32-WROOM-32 Bootloader v4.4 initialized.</div>
-            <div class="log-entry system">[HX711] Load Cell calibrated. Scale factor: 419.2. Tare: 0.0g</div>
-            <div class="log-entry system">[MFRC522] RFID SPI interface online. Firmware v0x92.</div>
-            <div class="log-entry system">[R307S] Optical Fingerprint UART2 baud 57600 connected.</div>
-            <div class="log-entry system">[DFPLAYER] UART1 initialized. SD Card mounted. Volume: 26</div>
-            <div class="log-entry system">[SERVOS] 3× MG995 initialized on GPIO 13, 12, 14. Angles 0° (Closed).</div>
-            <div class="log-entry prompt">[AUDIO PROMPT] Track #1: "Welcome. Please scan your ration card."</div>
-          </div>
-        </div><!-- /sim-console-card -->
-      </div><!-- /simulator-layout -->
-    </div><!-- /tab-simulator -->
-  </div><!-- /board-stage-pane -->
-</div><!-- /featured-4 -->
 
-            </div><!-- /fx-center -->
-
-            <!-- Right Track: Technical Specs & Telemetry -->
-            <div class="fx-right" role="list">
-              <div class="fx-track" id="right-track">
-                <div class="fx-item fx-right-item active" data-index="0" role="button" tabindex="0">SERVO GATES · LOAD CELL</div>
-                <div class="fx-item fx-right-item" data-index="1" role="button" tabindex="0">AADHAAR BIOMETRIC REGISTRY</div>
-                <div class="fx-item fx-right-item" data-index="2" role="button" tabindex="0">4 GRAIN SILOS · IR GAUGES</div>
-                <div class="fx-item fx-right-item" data-index="3" role="button" tabindex="0">AUDIT LEDGER · ZERO FRAUD</div>
-                <div class="fx-item fx-right-item" data-index="4" role="button" tabindex="0">HARDWARE EMULATION SUITE</div>
+          <div class="card">
+            <div class="card-head">
+              <h2 class="card-title">Serial console</h2>
+              <div class="card-tools">
+                <button class="btn btn-ghost btn-sm" id="sim-clear-logs" type="button">Clear</button>
               </div>
             </div>
-
-          </div><!-- /fx-grid -->
-
-          <!-- Bottom Status & Progress Bar -->
-          <div class="fx-bottom-bar">
-            <div class="fx-bottom-info" id="fx-bottom-subtitle">BOARD 01: MACHINE HARDWARE ARCHITECTURE · LOAD CELL &amp; SERVO GATES</div>
-            <div class="fx-progress-box">
-              <span class="fx-progress-num" id="current-number">01</span>
-              <div class="fx-progress-line">
-                <div class="fx-progress-fill" id="progress-fill"></div>
-              </div>
-              <span class="fx-progress-num">05</span>
+            <div class="console" id="sim-console" role="log" aria-live="polite">
+              <div class="log-entry system">[BOOT] ESP32-WROOM-32 initialising…</div>
+              <div class="log-entry system">[BOOT] MFRC522 RFID reader ready.</div>
+              <div class="log-entry system">[BOOT] R307S fingerprint sensor ready.</div>
+              <div class="log-entry system">[BOOT] HX711 load cell tared at 0.00 g.</div>
+              <div class="log-entry system">[BOOT] 4× MG995 servo gates locked at 0°.</div>
+              <div class="log-entry system">[BOOT] DFPlayer Mini mounted.</div>
+              <div class="log-entry prompt">[READY] Awaiting RFID card…</div>
             </div>
           </div>
-
-        </div><!-- /fx-fixed -->
-      </div><!-- /fx-fixed-section -->
-    </div><!-- /fx-scroll -->
-  </main>
-
-  <!-- ========= CINEMATIC CURTAIN REVEAL MOTION FOOTER ========= -->
-  <div id="motion-footer-curtain" class="curtain-reveal-wrapper">
-    <footer class="cinematic-fixed-footer">
-
-      <!-- Ambient Light & Grid Background -->
-      <div class="footer-aurora animate-footer-breathe"></div>
-      <div class="footer-bg-grid"></div>
-
-      <!-- Giant background text -->
-      <div id="footer-giant-text" class="footer-giant-bg-text">
-        TNePDS
-      </div>
-
-      <!-- 1. Diagonal Sleek Marquee (Top of footer) -->
-      <div class="footer-marquee-strip">
-        <div class="footer-marquee-track animate-footer-scroll-marquee">
-          <div class="footer-marquee-item">
-            <span>PUBLIC DISTRIBUTION SYSTEM</span> <span class="accent-dot">✦</span>
-            <span>AADHAAR KYC VERIFIED</span> <span class="accent-dot">✦</span>
-            <span>CLASS-III CERTIFIED SCALE</span> <span class="accent-dot">✦</span>
-            <span>TRANSPARENT QUOTA</span> <span class="accent-dot">✦</span>
-            <span>FAIR PRICE SHOP TERMINAL #042</span> <span class="accent-dot">✦</span>
-            <span>ZERO FRAUD INTERLOCK</span> <span class="accent-dot">✦</span>
-          </div>
-          <div class="footer-marquee-item">
-            <span>PUBLIC DISTRIBUTION SYSTEM</span> <span class="accent-dot">✦</span>
-            <span>AADHAAR KYC VERIFIED</span> <span class="accent-dot">✦</span>
-            <span>CLASS-III CERTIFIED SCALE</span> <span class="accent-dot">✦</span>
-            <span>TRANSPARENT QUOTA</span> <span class="accent-dot">✦</span>
-            <span>FAIR PRICE SHOP TERMINAL #042</span> <span class="accent-dot">✦</span>
-            <span>ZERO FRAUD INTERLOCK</span> <span class="accent-dot">✦</span>
-          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- 2. Main Center Content -->
-      <div class="footer-center-content">
-        <h2 id="footer-heading" class="footer-headline footer-text-glow">
-          Modernizing Public Distribution
-        </h2>
-        <p class="footer-subheadline">
-          Government of Tamil Nadu • Department of Food &amp; Consumer Protection
-        </p>
+    </main>
 
-        <!-- Interactive Magnetic Pills Layout -->
-        <div id="footer-links-group" class="footer-pills-group">
-          <!-- App Store Links (Primary) -->
-          <div class="footer-pills-row">
-            <a href="#" class="footer-glass-pill magnetic-btn">
-              <svg class="pill-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.56.04 2.87.67 3.55 1.76-3.13 1.77-2.62 5.92.35 7.14-.65 1.58-1.57 3.1-2.57 4.03zm-3.21-14.7c-.55 1.4-1.89 2.37-3.25 2.28.09-1.5 1.05-2.82 2.38-3.4 1.25-.57 2.66-.41 3.25.04-.15.35-.26.72-.38 1.08z" />
-              </svg>
-              <span>Download TNePDS iOS</span>
-            </a>
-            
-            <a href="#" class="footer-glass-pill magnetic-btn">
-              <svg class="pill-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0004.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0004.5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0222 3.503C15.5902 8.242 13.8533 7.85 12 7.85c-1.8533 0-3.5902.392-5.1369 1.1004L4.841 5.4475a.416.416 0 00-.5676-.1521.416.416 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3436-4.1021-2.6893-7.5743-6.1185-9.4396" />
-              </svg>
-              <span>Download TNePDS Android</span>
-            </a>
-          </div>
-
-          <!-- Secondary Links -->
-          <div class="footer-pills-row secondary">
-            <a href="#" class="footer-glass-pill pill-sm magnetic-btn">Citizen Charter</a>
-            <a href="#" class="footer-glass-pill pill-sm magnetic-btn">Toll-Free Helpline: 1967</a>
-            <a href="#" class="footer-glass-pill pill-sm magnetic-btn">Grievance Redressal</a>
-            <a href="#" class="footer-glass-pill pill-sm magnetic-btn">Privacy Policy</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Bottom Bar / Credits -->
-      <div class="footer-bottom-bar">
-        <div class="footer-copyright">
-          © 2026 Government of Tamil Nadu. All rights reserved.
-        </div>
-
-        <div class="footer-glass-pill footer-crafted-badge">
-          <span>Crafted with</span>
-          <span class="animate-footer-heartbeat footer-heart">❤</span>
-          <span>for Automated Fair Price Shops</span>
-        </div>
-
-        <button type="button" id="footer-scroll-top" class="footer-glass-pill footer-scroll-top magnetic-btn" title="Back to top">
-          <svg class="scroll-top-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-          </svg>
-        </button>
-      </div>
-
+    <footer class="app-footer">
+      <span>Department of Food &amp; Civil Supplies, Tamil Nadu</span>
+      <span class="footer-sep">·</span>
+      <span>FPS-TN-03-A-042</span>
+      <span class="footer-sep">·</span>
+      <span class="mono" id="footer-dispenser">ESP32_DISP_01</span>
+      <span class="footer-right">
+        <span class="status-dot" id="conn-dot"></span>
+        <span id="conn-text">Connecting…</span>
+      </span>
     </footer>
   </div>
 
-  <!-- ========= MODAL: ENROLL NEW BENEFICIARY ========= -->
-  <div class="modal-backdrop" id="modal-enroll" role="dialog" aria-modal="true" aria-labelledby="modal-title-enroll">
+  <!-- =====================================================================
+       ENROLL MODAL
+       ===================================================================== -->
+  <div class="modal" id="modal-enroll" role="dialog" aria-modal="true"
+    aria-labelledby="modal-title-enroll" hidden>
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modal-title-enroll">Enroll New Beneficiary</h3>
-        <button class="modal-close" id="modal-enroll-close" aria-label="Close">✕</button>
+      <div class="modal-head">
+        <h2 class="modal-title" id="modal-title-enroll">Enroll beneficiary</h2>
+        <button class="modal-close" id="modal-enroll-close" type="button" aria-label="Close dialog">
+          <svg width="18" height="18" aria-hidden="true"><use href="#icon-x" /></svg>
+        </button>
       </div>
-      <form id="form-enroll" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="new-name">Full Name *</label>
-            <input type="text" id="new-name" required placeholder="e.g. Senthil Murugan" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="new-card-no">Ration Card Number *</label>
-            <input type="text" id="new-card-no" required placeholder="e.g. TN-03-A-123456" autocomplete="off">
+      <form id="form-enroll">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="new-name">Full name</label>
+              <input class="input" id="new-name" type="text" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-card-no">Ration card number</label>
+              <input class="input" id="new-card-no" type="text" placeholder="TN-03-A-000000" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-rfid-uid">RFID UID</label>
+              <input class="input mono" id="new-rfid-uid" type="text" placeholder="8 hex characters"
+                required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-fp-id">Fingerprint slot</label>
+              <input class="input" id="new-fp-id" type="number" min="1" max="127" value="1" required>
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-card-type">Card type</label>
+              <select class="input" id="new-card-type">
+                <option>PHH (Priority Household)</option>
+                <option>AAY (Antyodaya Anna Yojana)</option>
+                <option>NPHH (Non-Priority Household)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-family-count">Family members</label>
+              <input class="input" id="new-family-count" type="number" min="1" max="20" value="4">
+            </div>
+
+            <p class="form-section">Monthly quota (grams)</p>
+
+            <div class="field">
+              <label class="field-label" for="new-quota-rice">Rice</label>
+              <input class="input" id="new-quota-rice" type="number" min="0" step="50" value="500">
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-quota-wheat">Wheat</label>
+              <input class="input" id="new-quota-wheat" type="number" min="0" step="50" value="500">
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-quota-dal">Toor Dal</label>
+              <input class="input" id="new-quota-dal" type="number" min="0" step="50" value="250">
+            </div>
+            <div class="field">
+              <label class="field-label" for="new-quota-sugar">Sugar</label>
+              <input class="input" id="new-quota-sugar" type="number" min="0" step="50" value="250">
+            </div>
           </div>
         </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="new-rfid-uid">RFID Smart Card UID (Hex) *</label>
-            <input type="text" id="new-rfid-uid" required placeholder="e.g. 5A3B2C1D" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label for="new-fp-id">Fingerprint Template ID (1–1000)</label>
-            <input type="number" id="new-fp-id" min="1" max="1000" placeholder="e.g. 6">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="new-card-type">Scheme / Card Type</label>
-            <select id="new-card-type">
-              <option value="PHH (Priority Household)">PHH (Priority Household)</option>
-              <option value="AAY (Antyodaya Anna Yojana)">AAY (Antyodaya Anna Yojana)</option>
-              <option value="NPHH (Non-Priority Household)">NPHH (Non-Priority Household)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="new-family-count">Family Members Count</label>
-            <input type="number" id="new-family-count" value="4" min="1">
-          </div>
-        </div>
-
-        <div class="form-section-title">Monthly Commodity Quota (Grams)</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="new-quota-rice">Rice (g)</label>
-            <input type="number" id="new-quota-rice" value="500" step="50">
-          </div>
-          <div class="form-group">
-            <label for="new-quota-wheat">Wheat (g)</label>
-            <input type="number" id="new-quota-wheat" value="500" step="50">
-          </div>
-          <div class="form-group">
-            <label for="new-quota-dal">Toor Dal (g)</label>
-            <input type="number" id="new-quota-dal" value="250" step="50">
-          </div>
-          <div class="form-group">
-            <label for="new-quota-sugar">Sugar (g)</label>
-            <input type="number" id="new-quota-sugar" value="250" step="50">
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" id="modal-enroll-cancel">Cancel</button>
-          <button type="submit" class="btn btn-primary">💾 Save Beneficiary</button>
+        <div class="modal-foot">
+          <button class="btn btn-ghost" id="modal-enroll-cancel" type="button">Cancel</button>
+          <button class="btn btn-primary" type="submit">
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus" /></svg>
+            Enroll beneficiary
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
   <script src="login.js"></script>
   <script src="app.js"></script>
   <script src="simulator.js"></script>
-  <script src="scroll-engine.js"></script>
-  <script src="motion-footer.js"></script>
-  <script src="video-hero.js"></script>
 </body>
 
 </html>

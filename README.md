@@ -34,7 +34,7 @@ ration/
 │   ├── package.json          # Node dependencies (express, ws, cors)
 │   └── ration.db             # Local zero-config persistent database
 │
-├── frontend/                 # Modern Dark-Themed Web Dashboard
+├── frontend/                 # Light-Themed Web Dashboard (offline, no CDN)
 │   ├── index.html            # Single-page dashboard & schematic viewer
 │   ├── style.css             # Glassmorphic responsive design system
 │   ├── app.js                # WebSocket client & real-time UI synchronization

@@ -30,7 +30,7 @@
   const simBtnFailFp = document.getElementById('sim-btn-fail-fp');
   const simStepGrain = document.getElementById('sim-step-grain');
   const simGrainButtons = document.querySelectorAll('.grain-btn');
-  const simLangButtons = document.querySelectorAll('.btn-lang');
+  const simLangButtons = document.querySelectorAll('.lang');
   const simStepDispense = document.getElementById('sim-step-dispense');
   const simBtnToggleContainer = document.getElementById('sim-btn-toggle-container');
   const simBtnStartDispense = document.getElementById('sim-btn-start-dispense');
@@ -75,6 +75,7 @@
         logConsole(`[LCD 20x4] Line 1: ${data.beneficiary.name.slice(0, 16)} | Line 2: SCAN FINGERPRINT`, 'system');
 
         simStepFp?.classList.add('active');
+        document.getElementById('sim-step-rfid')?.classList.add('done');
       } catch (err) {
         logConsole(`[HTTP ERROR] Verification failed: ${err.message}`, 'error');
       }
@@ -83,7 +84,7 @@
     // 2. Fingerprint Match
     simBtnMatchFp?.addEventListener('click', async () => {
       if (!simState.authenticatedBeneficiary) {
-        alert('Please tap an RFID card first!');
+        if (window.showToast) window.showToast('Tap an RFID card first.', 'error');
         return;
       }
 
@@ -107,6 +108,7 @@
           logConsole(`[R307S] Match Found! Template ID: #${fpId}. Confidence score: 98.4%`, 'success');
           logConsole(`[DFPLAYER] Audio Track #3: "Biometric confirmed. Please select language and grain."`, 'prompt');
           simStepGrain?.classList.add('active');
+          simStepFp?.classList.add('done');
         }
       } catch (err) {
         logConsole(`[R307S ERROR] Match error: ${err.message}`, 'error');
@@ -155,6 +157,7 @@
         logConsole(`[GRAIN SELECT] ${simState.selectedGrain.toUpperCase()} | Quota Target: ${simState.targetWeightG}g | Valve Servo #${simState.selectedServo}`, 'system');
         logConsole(`[DFPLAYER] Audio Track #5: "Please place the collection container under the funnel."`, 'prompt');
         simStepDispense?.classList.add('active');
+        simStepGrain?.classList.add('done');
         checkReadyToDispense();
       });
     });
@@ -164,15 +167,15 @@
       simState.containerPlaced = !simState.containerPlaced;
 
       if (simState.containerPlaced) {
-        simBtnToggleContainer.textContent = '❌ Remove Container from Scale';
-        simBtnToggleContainer.classList.remove('btn-secondary');
-        simBtnToggleContainer.classList.add('btn-outline');
+        simBtnToggleContainer.textContent = 'Remove container from scale';
+        simBtnToggleContainer.classList.remove('btn-ghost');
+        simBtnToggleContainer.classList.add('btn-danger');
         logConsole(`[IR SENSOR 1] Beam Interrupted (GPIO 34 = LOW). Container DETECTED on scale platform!`, 'sensor');
         logConsole(`[HX711] Tare initiated with container tare offset: 120.4g -> Auto-zeroed to 0.00g`, 'sensor');
       } else {
-        simBtnToggleContainer.textContent = '🫙 Place Container on Scale (IR-1)';
-        simBtnToggleContainer.classList.remove('btn-outline');
-        simBtnToggleContainer.classList.add('btn-secondary');
+        simBtnToggleContainer.textContent = 'Place container on scale';
+        simBtnToggleContainer.classList.remove('btn-danger');
+        simBtnToggleContainer.classList.add('btn-ghost');
         logConsole(`[IR SENSOR 1] Beam Unbroken (GPIO 34 = HIGH). NO CONTAINER detected!`, 'sensor');
       }
 
