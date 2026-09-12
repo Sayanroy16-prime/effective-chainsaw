@@ -1,0 +1,37 @@
+# Node dependencies
+node_modules/
+backend/node_modules/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+backend/ration.db
+
+# Environment variables & secrets
+.env
+.env*.local
+*.pem
+*.key
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PlatformIO & Arduino builds
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+dist/

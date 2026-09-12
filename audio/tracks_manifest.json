@@ -1,0 +1,94 @@
+{
+  "project": "Smart Ration Dispenser Voice Prompts",
+  "hardware": "DFPlayer Mini + MicroSD (FAT32)",
+  "folders": {
+    "01": "English Prompts",
+    "02": "Tamil Prompts (தமிழ்)"
+  },
+  "tracks": [
+    {
+      "track_id": 1,
+      "filename": "001.mp3",
+      "en_text": "Welcome. Please scan your ration card.",
+      "ta_text": "வணக்கம். உங்கள் குடும்ப அட்டையை ஸ்கேன் செய்யவும்.",
+      "purpose": "Idle prompt when waiting for a beneficiary"
+    },
+    {
+      "track_id": 2,
+      "filename": "002.mp3",
+      "en_text": "Authentication successful. Card verified.",
+      "ta_text": "அட்டை சரிபார்க்கப்பட்டது. குடும்ப அட்டை ஏற்றுக்கொள்ளப்பட்டது.",
+      "purpose": "Played after valid RFID card scan"
+    },
+    {
+      "track_id": 3,
+      "filename": "003.mp3",
+      "en_text": "Please place your finger on the biometric scanner.",
+      "ta_text": "கைரேகை சென்சாரில் உங்கள் விரலை வைக்கவும்.",
+      "purpose": "Prompts beneficiary for R307S fingerprint scan"
+    },
+    {
+      "track_id": 4,
+      "filename": "004.mp3",
+      "en_text": "Please select the grain you wish to collect.",
+      "ta_text": "நீங்கள் பெற விரும்பும் உணவு தானியத்தை தேர்வு செய்யவும்.",
+      "purpose": "Grain commodity selection prompt"
+    },
+    {
+      "track_id": 5,
+      "filename": "005.mp3",
+      "en_text": "Please place the collection container under the funnel.",
+      "ta_text": "தானியம் விழும் புனலுக்கு அடியில் பாத்திரத்தை வைக்கவும்.",
+      "purpose": "Instructs user to place container (IR-1 check)"
+    },
+    {
+      "track_id": 6,
+      "filename": "006.mp3",
+      "en_text": "Dispensing in progress. Please wait.",
+      "ta_text": "தானியம் விநியோகிக்கப்படுகிறது. சற்று காத்திருக்கவும்.",
+      "purpose": "Dispensing servo gate active announcement"
+    },
+    {
+      "track_id": 7,
+      "filename": "007.mp3",
+      "en_text": "Dispensing completed. Please take your container.",
+      "ta_text": "தானியம் வெற்றிகரமாக வழங்கப்பட்டது. உங்கள் பாத்திரத்தை எடுத்துக்கொள்ளவும்.",
+      "purpose": "Load cell target weight cutoff reached"
+    },
+    {
+      "track_id": 8,
+      "filename": "008.mp3",
+      "en_text": "You have already collected this month's ration entitlement.",
+      "ta_text": "இந்த மாதத்திற்கான ரேஷன் பொருட்களை நீங்கள் ஏற்கனவே பெற்றுவிட்டீர்கள்.",
+      "purpose": "Fraud prevention rejection prompt"
+    },
+    {
+      "track_id": 9,
+      "filename": "009.mp3",
+      "en_text": "Thank you for using the Smart Ration PDS. Have a great day.",
+      "ta_text": "நியாயவிலைக் கடை சேவையை பயன்படுத்தியமைக்கு நன்றி. நல்வாழ்த்துகள்.",
+      "purpose": "Session exit prompt"
+    },
+    {
+      "track_id": 10,
+      "filename": "010.mp3",
+      "en_text": "Card not recognized. Please contact civil supplies office.",
+      "ta_text": "அட்டை செல்லாது. நியாயவிலைக் கடை அதிகாரியை அணுகவும்.",
+      "purpose": "Unknown card scan alert"
+    },
+    {
+      "track_id": 11,
+      "filename": "011.mp3",
+      "en_text": "Biometric verification failed. Fingerprint mismatch.",
+      "ta_text": "கைரேகை பொருந்தவில்லை. சரிபார்ப்பு தோல்வியடைந்தது.",
+      "purpose": "Fingerprint mismatch alert"
+    },
+    {
+      "track_id": 12,
+      "filename": "012.mp3",
+      "en_text": "Warning! Container removed during dispensing. Gate closed.",
+      "ta_text": "எச்சரிக்கை! விநியோகத்தின் போது பாத்திரம் அகற்றப்பட்டது.",
+      "purpose": "Safety interrupt prompt"
+    }
+  ]
+}
